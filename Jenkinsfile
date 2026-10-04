@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        DOCKER = 'C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe'
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -9,7 +12,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    bat "docker build -t quotes-generator:%BUILD_NUMBER% ."
+                    bat "\"${DOCKER}\" build -t quotes-generator:%BUILD_NUMBER% ."
                 }
             }
         }
@@ -17,9 +20,9 @@ pipeline {
             steps {
                 script {
                     def appName = "my-quotes-app"
-                    bat "docker stop ${appName} || exit /b 0"
-                    bat "docker rm ${appName} || exit /b 0"
-                    bat "docker run -d --name ${appName} -p 3000:80 quotes-generator:%BUILD_NUMBER%"
+                    bat "\"${DOCKER}\" stop ${appName} || exit /b 0"
+                    bat "\"${DOCKER}\" rm ${appName} || exit /b 0"
+                    bat "\"${DOCKER}\" run -d --name ${appName} -p 3000:80 quotes-generator:%BUILD_NUMBER%"
                 }
             }
         }
