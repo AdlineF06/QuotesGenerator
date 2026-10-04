@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER = 'C:\\Users\\Adline\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe'
-        DOCKER_BUILDKIT = '1'
+        DOCKER_BUILDKIT = '0'
     }
     stages {
         stage('Checkout') {
